@@ -1,0 +1,67 @@
+# ============ PYTHON ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ============ VIRTUAL ENV ============
+.venv/
+venv/
+env/
+ENV/
+
+# ============ ENVIRONMENT / SECRETS ============
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ============ MODELS (BOHAT BARE HAIN) ============
+models/
+*.safetensors
+*.ckpt
+*.bin
+*.pth
+
+# ============ STORAGE (USER DATA) ============
+storage/
+backend/storage/
+backend/app/storage/
+uploads/
+generated/
+rejected/
+
+# ============ TEST OUTPUTS ============
+test_output.png
+test_*.png
+*.test.png
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ============ LOGS ============
+*.log
+logs/
+
+# ============ IDE ============
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ============ OS ============
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============ MISC ============
+*.bak
+*.tmp
+.cache/

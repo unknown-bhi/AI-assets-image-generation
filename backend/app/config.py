@@ -62,6 +62,13 @@ class Settings(BaseSettings):
         ):
             path.mkdir(parents=True, exist_ok=True)
 
+    NSFW_THRESHOLD: float = 0.7  
+    NSFW_MODEL_ID: str = "Falconsai/nsfw_image_detection"
+
+       # Prompt filter (Layer 1)
+    PROMPT_CLASSIFIER_ENABLED: bool = True
+    PROMPT_CLASSIFIER_MODEL_ID: str = "unitary/toxic-bert"
+    PROMPT_TOXICITY_THRESHOLD: float = 0.5
 
 
 settings = Settings()

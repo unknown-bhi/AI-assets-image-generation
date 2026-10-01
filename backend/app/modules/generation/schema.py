@@ -97,3 +97,58 @@ class VariationOut(BaseModel):
   
     parent_id: int
     variations: list[GenerationOut]
+
+class BatchItemIn(BaseModel):
+    """Single item in a batch."""
+    type: str = "txt2img"     # "txt2img" | "img2img"
+    prompt: str = Field(..., min_length=1, max_length=1000)
+    negative_prompt: str | None = None
+    width: int = Field(512, ge=256, le=1024)
+    height: int = Field(512, ge=256, le=1024)
+    steps: int = Field(20, ge=1, le=50)
+    cfg_scale: float = Field(7.0, ge=1.0, le=20.0)
+    seed: int | None = None
+    strength: float | None = Field(None, ge=0.05, le=0.95)
+    ref_image_path: str | None = None
+
+
+class BatchCreate(BaseModel):
+    """Request body for batch creation."""
+    name: str | None = None
+    items: list[BatchItemIn] = Field(..., min_length=1, max_length=100)
+
+
+class BatchItemOut(BaseModel):
+    """Item status in batch response."""
+    id: int
+    type: str
+    status: str
+    prompt: str
+    output_path: str | None
+
+
+class BatchOut(BaseModel):
+    """Batch response."""
+    batch_id: int
+    name: str | None
+    status: str
+    total_items: int
+    completed_items: int
+    failed_items: int
+    pending_items: int
+    created_at: datetime
+    completed_at: datetime | None
+    items: list[BatchItemOut]
+
+
+class BatchListOut(BaseModel):
+    """List of batches."""
+    model_config = ConfigDict(from_attributes=True)
+    total: int
+    items: list["BatchOut"]
+
+class VariationsOut(BaseModel):
+    """Response for variations endpoint."""
+    total: int
+    generation_ids: list[int]
+    items: list[GenerationOut]

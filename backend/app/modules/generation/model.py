@@ -50,7 +50,12 @@ class Generation(Base):
         nullable=False,
         index=True,
     )
-
+        # Batch link (nullable)
+    batch_id: Mapped[int | None] = mapped_column(
+        ForeignKey("batch_jobs.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
     # Generation type
     type: Mapped[GenerationType] = mapped_column(
         Enum(GenerationType, name="generation_type"),
@@ -107,3 +112,48 @@ class Generation(Base):
         DateTime(timezone=True), nullable=True
     )
 
+# ============ BATCH JOB ============
+class BatchJobStatus(str, enum.Enum):
+    """Batch job status."""
+    PENDING = "pending"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    PARTIAL = "partial"      # Some failed
+    FAILED = "failed"
+
+
+class BatchJob(Base):
+    """A bulk generation job."""
+
+    __tablename__ = "batch_jobs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    name: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    status: Mapped[BatchJobStatus] = mapped_column(
+        Enum(BatchJobStatus, name="batch_job_status"),
+        default=BatchJobStatus.PENDING,
+        nullable=False,
+        index=True,
+    )
+
+    total_items: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    completed_items: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    failed_items: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+
+    error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    completed_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
+    def __repr__(self) -> str:
+        return f"<BatchJob id={self.id} status={self.status}>"

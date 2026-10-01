@@ -19,20 +19,21 @@ ENV/
 .env
 .env.local
 .env.*.local
+backend/.env
 *.pem
 *.key
 
-# ============ MODELS (BOHAT BARE HAIN) ============
+# ============ MODELS ============
 models/
+backend/models/
 *.safetensors
 *.ckpt
 *.bin
 *.pth
 
-# ============ STORAGE (USER DATA) ============
+# ============ STORAGE ============
 storage/
 backend/storage/
-backend/app/storage/
 uploads/
 generated/
 rejected/
@@ -40,14 +41,35 @@ rejected/
 # ============ TEST OUTPUTS ============
 test_output.png
 test_*.png
+safety_test_*.png
+test_img2img_output.png
 *.test.png
 .pytest_cache/
 .coverage
 htmlcov/
 
-# ============ LOGS ============
+# ============ MANUAL TEST ============
+manual_test/
+backend/manual_test/
+_old_test_backup/
+test/
+backend/test/
+
+# ============ IMAGES ============
+images/
+backend/images/
+*.jpg
+*.jpeg
+*.gif
+!logo.png
+
+# ============ TEMP / LOGS ============
 *.log
 logs/
+report.txt
+*.bak
+*.tmp
+.cache/
 
 # ============ IDE ============
 .idea/
@@ -62,6 +84,6 @@ Thumbs.db
 desktop.ini
 
 # ============ MISC ============
-*.bak
-*.tmp
-.cache/
+HMP/
+python work/
+uv.lock

@@ -1,6 +1,9 @@
+"""
+Shared FastAPI dependencies.
+"""
 
-from fastapi import Depends, HTTPException, status,Security
-from fastapi.security import HTTPAuthorizationCredentials,HTTPBearer
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.auth.security import decode_access_token
@@ -9,26 +12,34 @@ from app.modules.auth.model import User
 from app.modules.auth.service import get_user_by_id
 
 
+# ============ BEARER SCHEME ============
+security = HTTPBearer(auto_error=True)   # ← auto_error=True
 
-security =HTTPBearer(auto_error=False)
 
-
-async def get_current_user(credentials :HTTPAuthorizationCredentials | None = Security(security),
-                            token: str = Depends(security), db: AsyncSession = Depends(get_db)) :
-
+# ============ GET CURRENT USER ============
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    """
+    JWT token verify karke current user return karo.
+    """
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    # 1. Token decode karo
-    token =credentials.credentials
+    # Defensive check (auto_error=True ke saath bhi safety)
+    if credentials is None:
+        raise credentials_exception
+
+    token = credentials.credentials
+
     payload = decode_access_token(token)
     if payload is None:
         raise credentials_exception
 
-    # 2. User ID nikalo
     user_id_str = payload.get("sub")
     if user_id_str is None:
         raise credentials_exception
@@ -38,7 +49,6 @@ async def get_current_user(credentials :HTTPAuthorizationCredentials | None = Se
     except (ValueError, TypeError):
         raise credentials_exception
 
-    # 3. DB se user fetch karo
     user = await get_user_by_id(db, user_id)
     if user is None:
         raise credentials_exception
@@ -46,7 +56,7 @@ async def get_current_user(credentials :HTTPAuthorizationCredentials | None = Se
     return user
 
 
-
+# ============ GET CURRENT ACTIVE USER ============
 async def get_current_active_user(
     current_user: User = Depends(get_current_user),
 ) -> User:

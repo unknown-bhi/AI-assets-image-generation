@@ -43,6 +43,25 @@ class Settings(BaseSettings):
     MIN_HEIGHT: int = 256
     DIMENSION_MULTIPLE: int = 8
 
+    SD_CLI_PATH: Path = Path(
+        "/home/bitech/Desktop/kashmiry/AI_asseet_creator/stable-diffusion.cpp/build/bin/sd-cli"
+    )
+    QWEN_MODEL_PATH: Path = Path(
+        "/home/bitech/Desktop/kashmiry/AI_asseet_creator/qwen_models/qwen_image_2.1_turbo_Q4_K_M.gguf"
+    )
+    QWEN_VAE_PATH: Path = Path(
+        "/home/bitech/Desktop/kashmiry/AI_asseet_creator/qwen_models/qwen_image_2.1_vae_bf16.safetensors"
+    )
+    QWEN_LLM_PATH: Path = Path(
+        "/home/bitech/Desktop/kashmiry/AI_asseet_creator/qwen_models/Qwen3-VL-8B-Instruct-UD-Q4_K_XL.gguf"
+    )
+
+    # Cores
+    QWEN_CORES: str = "0-7"  # 8 cores
+
+    # Output
+    OUTPUT_DIR: Path = Path("/tmp/qwen_outputs")
+
     # Pydantic v2 config
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",

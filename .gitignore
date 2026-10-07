@@ -86,4 +86,109 @@ desktop.ini
 # ============ MISC ============
 HMP/
 python work/
-uv.lock
+
+# ============ PYTHON ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ============ VIRTUAL ENV ============
+.venv/
+venv/
+env/
+ENV/
+
+# ============ ENVIRONMENT / SECRETS ============
+.env
+.env.local
+.env.*.local
+backend/.env
+*.pem
+*.key
+
+# ============ AI MODELS (BOHOT BADE) ============
+models/
+qwen_models/
+backend/models/
+*.safetensors
+*.ckpt
+*.bin
+*.pth
+*.gguf
+
+# ============ SD.CPP / DF-GAN / GALIP ============
+stable-diffusion.cpp/
+backend/stable-diffusion.cpp/
+DF-GAN/
+GALIP/
+
+# ============ HUGGING FACE CACHE ============
+.cache/
+huggingface/
+
+# ============ STORAGE ============
+storage/
+backend/storage/
+uploads/
+generated/
+rejected/
+outputs/
+
+# ============ TEST OUTPUTS ============
+test_output.png
+test_*.png
+safety_test_*.png
+test_img2img_output.png
+*.test.png
+output*.png
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ============ MANUAL TEST BACKUP ============
+manual_test/
+backend/manual_test/
+_old_test_backup/
+
+# ============ IMAGES (Specific) ============
+images/
+backend/images/
+docs/images/
+# NOT *.jpg (general) — kyunki logo, favicon chahiye
+
+# ============ TEMP / LOGS ============
+*.log
+logs/
+report.txt
+*.bak
+*.tmp
+.cache/
+
+# ============ CELERY ============
+celerybeat-schedule
+celerybeat.pid
+
+# ============ IDE ============
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ============ OS ============
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============ MISC ============
+HMP/
+python work/
+*.pdf
+NOTES.md
+notes.txt

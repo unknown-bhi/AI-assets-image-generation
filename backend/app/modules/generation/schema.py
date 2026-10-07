@@ -105,8 +105,8 @@ class BatchItemIn(BaseModel):
     negative_prompt: str | None = None
     width: int = Field(512, ge=256, le=1024)
     height: int = Field(512, ge=256, le=1024)
-    steps: int = Field(20, ge=1, le=50)
-    cfg_scale: float = Field(7.0, ge=1.0, le=20.0)
+    steps: int = Field(10, ge=1, le=20)
+    cfg_scale: float = Field(1.0, ge=1.0, le=2.0)
     seed: int | None = None
     strength: float | None = Field(None, ge=0.05, le=0.95)
     ref_image_path: str | None = None
